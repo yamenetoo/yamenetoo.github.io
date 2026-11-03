@@ -32,10 +32,10 @@ header.top nav{display:flex;gap:18px;flex-wrap:wrap}
 header.top a{text-decoration:none;color:var(--muted)}
 header.top a:hover,header.top a:focus-visible{color:var(--fg);text-decoration:underline}
 button.theme{font:inherit;background:none;border:1px solid var(--line);color:var(--fg);padding:4px 10px;border-radius:4px;cursor:pointer}
-.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;align-items:center;padding-block:36px 56px}
+.hero{padding-block:48px 56px}
 .hero h1{font-family:var(--f-display);font-weight:700;font-size:clamp(40px,7vw,76px);line-height:.98;letter-spacing:-.025em;margin:0 0 10px;text-wrap:balance}
 .ar{font-size:22px;color:var(--muted);margin:0 0 22px;direction:rtl;text-align:left;unicode-bidi:plaintext}
-.lede{font-size:18px;max-width:46ch;margin:0 0 22px}
+.lede{font-size:19px;max-width:52ch;margin:0 0 22px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 24px;padding:0;list-style:none}
 .chips li{font-family:var(--f-mono);font-size:12.5px;border:1px solid var(--line);padding:3px 9px;border-radius:3px;background:var(--panel)}
 .links{display:flex;flex-wrap:wrap;gap:10px}
@@ -75,7 +75,7 @@ h2{font-family:var(--f-display);font-size:30px;letter-spacing:-.015em;margin:0 0
 .empty{padding:24px;border:1px dashed var(--line);border-radius:6px;color:var(--muted)}
 footer{padding-block:32px 48px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;font-size:14px;color:var(--muted)}
 footer code{font-family:var(--f-mono);color:var(--fg);user-select:all}
-@media (max-width:860px){.hero{grid-template-columns:1fr;gap:28px}.areas{grid-template-columns:1fr}}
+@media (max-width:860px){.areas{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 </style>
 
@@ -97,16 +97,6 @@ footer code{font-family:var(--f-mono);color:var(--fg);user-select:all}
         <a class="btn alt" href="https://github.com/yamenetoo" rel="noopener">GitHub profile</a>
         <a class="btn alt" href="https://orcid.org/0009-0009-1665-7203" rel="noopener">ORCID</a>
       </div>
-    </div>
-    <div class="map">
-      <figure>
-        <canvas id="lc" width="64" height="44" role="img" aria-label="Generated land-cover raster in Dynamic World colours. The button grows the built-up class by one cellular-automaton step."></canvas>
-        <figcaption>
-          <span id="step">Land-cover raster · year 0</span>
-          <button type="button" id="grow">Run one CA step</button>
-        </figcaption>
-        <div class="legend" id="legend"></div>
-      </figure>
     </div>
   </div>
 
@@ -204,55 +194,8 @@ footer code{font-family:var(--f-mono);color:var(--fg);user-select:all}
     var dark=cur?cur==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;
     var next=dark?'light':'dark';root.setAttribute('data-theme',next);
     try{localStorage.setItem('theme',next)}catch(e){}
-    drawMap();
   };
 
-  /* Land-cover raster: Dynamic World class colours; seeded noise, two smoothing passes, optional growth step */
-  var W=64,H=44;
-  var CL=[['Water','#419bdf'],['Trees','#397d49'],['Grass','#88b053'],['Crops','#e49635'],['Shrub','#dfc35a'],['Built-up','#c4281b'],['Bare','#a59b8f']];
-  document.getElementById('legend').innerHTML=CL.map(function(c){return '<span><i style="background:'+c[1]+'"></i>'+c[0]+'</span>'}).join('');
-  var seed=20260311;function rnd(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296}
-  function field(){
-    var p=[];for(var k=0;k<5;k++)p.push([rnd()*6+1,rnd()*6+1,rnd()*6.28,rnd()*6.28]);
-    var g=[];
-    for(var y=0;y<H;y++){var row=[];for(var x=0;x<W;x++){
-      var v=0;p.forEach(function(q,i){v+=Math.sin(x/W*q[0]+q[2])*Math.cos(y/H*q[1]+q[3])/(1+i*.3)});
-      row.push(v)}g.push(row)}
-    return g;
-  }
-  var f=field(),grid=[],year=0;
-  var tr=[-1.1,-.5,-.1,.35,.75,1.2];
-  for(var y=0;y<H;y++){grid.push([]);for(var x=0;x<W;x++){
-    var v=f[y][x]+(rnd()-.5)*.5,c=6;
-    for(var i=0;i<tr.length;i++){if(v<tr[i]){c=i;break}}
-    if(y>H*.62&&x>W*.55&&rnd()<.25)c=5;
-    grid[y].push(c)}}
-  function smooth(){
-    var out=grid.map(function(r){return r.slice()});
-    for(var y=1;y<H-1;y++)for(var x=1;x<W-1;x++){
-      var cnt={};for(var dy=-1;dy<=1;dy++)for(var dx=-1;dx<=1;dx++){var c=grid[y+dy][x+dx];cnt[c]=(cnt[c]||0)+1}
-      var best=grid[y][x],bn=cnt[best];for(var k in cnt){if(cnt[k]>bn){bn=cnt[k];best=+k}}
-      out[y][x]=best}
-    grid=out;
-  }
-  smooth();smooth();
-  function grow(){
-    var out=grid.map(function(r){return r.slice()});
-    for(var y=1;y<H-1;y++)for(var x=1;x<W-1;x++){
-      if(grid[y][x]===0||grid[y][x]===5)continue;
-      var n=0;for(var dy=-1;dy<=1;dy++)for(var dx=-1;dx<=1;dx++)if(grid[y+dy][x+dx]===5)n++;
-      var p=Math.min(.55,n*.09);
-      if(n&&rnd()<p)out[y][x]=5}
-    grid=out;year++;
-    document.getElementById('step').textContent='Land-cover raster · year '+year;
-    drawMap();
-  }
-  var cv=document.getElementById('lc'),ctx=cv.getContext('2d');
-  function drawMap(){
-    for(var y=0;y<H;y++)for(var x=0;x<W;x++){ctx.fillStyle=CL[grid[y][x]][1];ctx.fillRect(x,y,1,1)}
-  }
-  document.getElementById('grow').onclick=grow;
-  drawMap();
 })();
 </script>
 
