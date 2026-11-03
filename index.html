@@ -72,6 +72,7 @@ h2{font-family:var(--f-display);font-size:30px;letter-spacing:-.015em;margin:0 0
 .repo p{margin:0;color:var(--muted);font-size:14.5px;flex:1}
 .meta{display:flex;justify-content:space-between;gap:8px;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
 .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}.tags span{font-family:var(--f-mono);font-size:11.5px;color:var(--accent);border:1px solid var(--line);padding:1px 7px;border-radius:3px}
 .empty{padding:24px;border:1px dashed var(--line);border-radius:6px;color:var(--muted)}
 footer{padding-block:32px 48px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;font-size:14px;color:var(--muted)}
 footer code{font-family:var(--f-mono);color:var(--fg);user-select:all}
@@ -112,7 +113,7 @@ footer code{font-family:var(--f-mono);color:var(--fg);user-select:all}
 
   <section id="repos">
     <h2>Repositories</h2>
-    <p class="sub">Public repositories on GitHub. Search, or filter by topic and language.</p>
+    <p class="sub">Public repositories on GitHub. Each repository is tagged by what it contains. Search, or filter by topic and language.</p>
     <div class="tools">
       <input id="q" type="search" placeholder="Search by name or description" aria-label="Search repositories">
       <select id="lang" aria-label="Filter by language"></select>
@@ -132,23 +133,24 @@ footer code{font-family:var(--f-mono);color:var(--fg);user-select:all}
 <script>
 (function(){
   var REPOS=[
-    {n:'Statistical-Repository',t:'stat',l:'Jupyter Notebook',s:1,d:'Statistical methods and projects in notebooks, with a detailed README covering every subfolder.',f:1},
-    {n:'RremoteSensing',t:'rs',l:'Python',s:0,d:'Four remote-sensing projects: Dynamic World toolkit, Markov-CA land-cover model for Jableh, Sentinel-2 batch download, USGS spectral library processor.',f:1},
-    {n:'Artificial-Neural-Network-Analysis-Using-Statistical-Approaches',t:'dl',l:'Jupyter Notebook',s:1,d:'Analysis of artificial neural networks with statistical approaches.'},
-    {n:'Model-Pruning-',t:'dl',l:'',s:0,d:'Neural network model pruning. The repository is still empty apart from its title.'},
-    {n:'UQXGD',t:'stat',l:'R',s:0,d:'UQXGD R package.'},
-    {n:'SRF_S2',t:'rs',l:'Python',s:0,d:'Sentinel-2 spectral response function.'},
-    {n:'Sismic-V1',t:'tool',l:'Python',s:0,d:'Python package for seismic data processing, earthquake monitoring, signal processing and visualization.'},
-    {n:'seqgrow',t:'dl',l:'Python',s:0,d:'SeqGrow: grows a neural network one hidden unit at a time, testing each candidate with online false-discovery-rate control (LORD). Code for the article with Heydari and Jabbari Khamnei.'},
-    {n:'Attention-Based-Multi-Asset-Forecasting-with-News-Driven-Criteria',t:'dl',l:'Python',s:0,d:'Attention-based multi-asset forecasting with news-driven criteria.'},
-    {n:'medsent',t:'dl',l:'Python',s:0,d:'Sentiment analysis of medication reviews: classical ML, Bi-LSTM/GRU, ensembles and BERT variants, reproducing the 32 tables of the thesis chapter.'},
-    {n:'CodeAnalyzer',t:'tool',l:'Python',s:0,d:'Python code analysis tool. The repository has no documentation yet.'},
-    {n:'LaTeX2Word',t:'tool',l:'',s:0,d:'LaTeX to Word conversion. The repository has no documentation yet.'},
-    {n:'currency-calculator',t:'tool',l:'HTML',s:0,d:'A currency calculator web page.'},
-    {n:'Fast-Face-tracking',t:'dl',l:'',s:0,d:'Face detection and recognition in video: extracts faces, trains ML and CNN/ANN models, and times each model on test footage.'},
-    {n:'AEMT-OSCP',t:'tool',l:'C++',s:0,d:'Automated evolutionary modularization for parallelizing sequential source code: AST parsing, dependency analysis, DTMC timing model and a genetic algorithm.'}
+    {n:'Statistical-Repository',t:['Statistics'],l:'Jupyter Notebook',s:1,d:'Statistical methods and projects in notebooks, with a detailed README covering every subfolder.',f:1},
+    {n:'RremoteSensing',t:['Remote sensing'],l:'Python',s:0,d:'Four remote-sensing projects: Dynamic World toolkit, Markov-CA land-cover model for Jableh, Sentinel-2 batch download, USGS spectral library processor.',f:1},
+    {n:'Artificial-Neural-Network-Analysis-Using-Statistical-Approaches',t:['Deep learning','Statistics'],l:'Jupyter Notebook',s:1,d:'Analysis of artificial neural networks with statistical approaches.'},
+    {n:'Model-Pruning-',t:['Deep learning'],l:'',s:0,d:'Neural network model pruning. The repository is still empty apart from its title.'},
+    {n:'UQXGD',t:['Statistics'],l:'R',s:0,d:'UQXGD R package.'},
+    {n:'SRF_S2',t:['Remote sensing'],l:'Python',s:0,d:'Sentinel-2 spectral response function.'},
+    {n:'Sismic-V1',t:['Seismology'],l:'Python',s:0,d:'Python package for seismic data processing, earthquake monitoring, signal processing and visualization.'},
+    {n:'seqgrow',t:['Deep learning','Statistics'],l:'Python',s:0,d:'SeqGrow: grows a neural network one hidden unit at a time, testing each candidate with online false-discovery-rate control (LORD). Code for the article with Heydari and Jabbari Khamnei.'},
+    {n:'Attention-Based-Multi-Asset-Forecasting-with-News-Driven-Criteria',t:['Deep learning','Finance'],l:'Python',s:0,d:'Attention-based multi-asset forecasting with news-driven criteria.'},
+    {n:'medsent',t:['NLP','Deep learning'],l:'Python',s:0,d:'Sentiment analysis of medication reviews: classical ML, Bi-LSTM/GRU, ensembles and BERT variants, reproducing the 32 tables of the thesis chapter.'},
+    {n:'CodeAnalyzer',t:['Software'],l:'Python',s:0,d:'Python code analysis tool. The repository has no documentation yet.'},
+    {n:'LaTeX2Word',t:['Software'],l:'',s:0,d:'LaTeX to Word conversion. The repository has no documentation yet.'},
+    {n:'currency-calculator',t:['Software','Finance'],l:'HTML',s:0,d:'A currency calculator web page.'},
+    {n:'Fast-Face-tracking',t:['Computer vision','Deep learning'],l:'',s:0,d:'Face detection and recognition in video: extracts faces, trains ML and CNN/ANN models, and times each model on test footage.'},
+    {n:'AEMT-OSCP',t:['Software'],l:'C++',s:0,d:'Automated evolutionary modularization for parallelizing sequential source code: AST parsing, dependency analysis, DTMC timing model and a genetic algorithm.'}
   ];
-  var TOPICS=[['all','All'],['stat','Statistics'],['dl','Deep learning'],['rs','Remote sensing'],['tool','Tools']];
+  var ORDER=['Statistics','Deep learning','Remote sensing','Computer vision','NLP','Finance','Seismology','Software'];
+  var TOPICS=[['all','All']].concat(ORDER.filter(function(t){return REPOS.some(function(r){return r.t.indexOf(t)>=0})}).map(function(t){return [t,t]}));
   var LC={'Python':'#3572A5','R':'#198CE7','Jupyter Notebook':'#DA5B0B','HTML':'#e34c26','C++':'#f34b7d','':'#8a948e'};
   var topic='all',lang='',query='';
   var list=document.getElementById('list'),tabs=document.getElementById('tabs'),sel=document.getElementById('lang'),
@@ -160,7 +162,7 @@ footer code{font-family:var(--f-mono);color:var(--fg);user-select:all}
   function renderTabs(){
     tabs.innerHTML='';
     TOPICS.forEach(function(p){
-      var b=document.createElement('button');b.type='button';b.textContent=p[1];
+      var b=document.createElement('button');b.type='button';b.textContent=p[1]+(p[0]==='all'?'':' '+REPOS.filter(function(r){return r.t.indexOf(p[0])>=0}).length);
       b.setAttribute('aria-pressed',String(topic===p[0]));
       b.onclick=function(){topic=p[0];renderTabs();render()};
       tabs.appendChild(b);
@@ -169,7 +171,7 @@ footer code{font-family:var(--f-mono);color:var(--fg);user-select:all}
   function esc(s){return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
   function render(){
     var rows=REPOS.filter(function(r){
-      return (topic==='all'||r.t===topic)&&(!lang||r.l===lang)&&
+      return (topic==='all'||r.t.indexOf(topic)>=0)&&(!lang||r.l===lang)&&
         (!query||(r.n+' '+r.d).toLowerCase().indexOf(query)>=0);
     }).sort(function(a,b){return (b.f||0)-(a.f||0)});
     count.textContent=rows.length+' of '+REPOS.length;
@@ -179,7 +181,8 @@ footer code{font-family:var(--f-mono);color:var(--fg);user-select:all}
       return '<li class="repo'+(r.f?' feat':'')+'"><h3><a href="'+url+'" rel="noopener">'+esc(r.n)+'</a></h3>'+
         '<p>'+(r.d?esc(r.d):'No description yet. Open the repository for details.')+'</p>'+
         '<div class="meta"><span><i class="dot" style="background:'+(LC[r.l]||LC[''])+'"></i>'+esc(r.l||'Other')+'</span>'+
-        '<span>'+(r.s?'★ '+r.s:'')+'</span></div></li>';
+        '<span>'+(r.s?'★ '+r.s:'')+'</span></div>'+
+        '<div class="tags">'+r.t.map(function(t){return '<span>'+t+'</span>'}).join('')+'</div></li>';
     }).join('');
   }
   q.oninput=function(){query=q.value.trim().toLowerCase();render()};
