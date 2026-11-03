@@ -34,7 +34,12 @@ header.top a:hover,header.top a:focus-visible{color:var(--fg);text-decoration:un
 button.theme{font:inherit;background:none;border:1px solid var(--line);color:var(--fg);padding:4px 10px;border-radius:4px;cursor:pointer}
 .hero{padding-block:48px 56px}
 .hero h1{font-family:var(--f-display);font-weight:700;font-size:clamp(40px,7vw,76px);line-height:.98;letter-spacing:-.025em;margin:0 0 10px;text-wrap:balance}
-.ar{font-size:22px;color:var(--muted);margin:0 0 22px;direction:rtl;text-align:left;unicode-bidi:plaintext}
+.ar{font-size:22px;color:var(--muted);margin:0;direction:rtl;text-align:left;unicode-bidi:plaintext}
+.id{display:flex;align-items:center;gap:24px;margin-bottom:22px}
+.id>div:last-child{min-width:0}
+.avatar{position:relative;flex:none;width:120px;height:120px;border-radius:50%;overflow:hidden;border:1px solid var(--line);background:var(--panel);display:grid;place-items:center}
+.avatar span{font-family:var(--f-display);font-weight:700;font-size:36px;color:var(--accent)}
+.avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .lede{font-size:19px;max-width:52ch;margin:0 0 22px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 24px;padding:0;list-style:none}
 .chips li{font-family:var(--f-mono);font-size:12.5px;border:1px solid var(--line);padding:3px 9px;border-radius:3px;background:var(--panel)}
@@ -76,6 +81,7 @@ h2{font-family:var(--f-display);font-size:30px;letter-spacing:-.015em;margin:0 0
 .empty{padding:24px;border:1px dashed var(--line);border-radius:6px;color:var(--muted)}
 footer{padding-block:32px 48px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;font-size:14px;color:var(--muted)}
 footer code{font-family:var(--f-mono);color:var(--fg);user-select:all}
+@media (max-width:560px){.id{flex-direction:column;align-items:flex-start;gap:16px}.avatar{width:96px;height:96px}}
 @media (max-width:860px){.areas{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 </style>
@@ -89,8 +95,13 @@ footer code{font-family:var(--f-mono);color:var(--fg);user-select:all}
 
   <div class="hero" id="about">
     <div>
-      <h1>Mohamad Yamen Al-Mohamad</h1>
-      <p class="ar" lang="ar">محمد يامن المحمد</p>
+      <div class="id">
+        <div class="avatar" aria-hidden="false"><span>YM</span><img src="https://avatars.githubusercontent.com/u/48772383?v=4&amp;s=240" alt="Photo of Mohamad Yamen Al-Mohamad" width="120" height="120" onerror="this.remove()"></div>
+        <div>
+          <h1>Mohamad Yamen Al-Mohamad</h1>
+          <p class="ar" lang="ar">محمد يامن المحمد</p>
+        </div>
+      </div>
       <p class="lede">Statistician at the University of Tabriz. I work on probability distributions, neural networks and the statistics behind them, and map land-cover change from satellite data.</p>
       <ul class="chips"><li>Statistics</li><li>Deep learning</li><li>Remote sensing</li><li>Google Earth Engine</li><li>Python · R</li></ul>
       <div class="links">
