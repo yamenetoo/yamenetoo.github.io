@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Yamen Al-Mohamad</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a survey sheet. One wide hero with a land-cover raster, then a filterable index of repositories. */
+:root{
+  --bg:#eef1ee; --panel:#f7f9f6; --fg:#14201b; --muted:#56655e; --line:#cdd6cf;
+  --accent:#1f6f4a; --accent-fg:#ffffff; --built:#c4281b; --water:#419bdf;
+  --f-display:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;
+  --f-body:'Instrument Sans','Segoe UI',system-ui,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1714; --panel:#16201c; --fg:#e6ede8; --muted:#92a39a; --line:#27362f;
+  --accent:#6fd39b; --accent-fg:#0b1511; --built:#ef6a5c; --water:#5aaeea; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1714; --panel:#16201c; --fg:#e6ede8; --muted:#92a39a; --line:#27362f;
+  --accent:#6fd39b; --accent-fg:#0b1511; --built:#ef6a5c; --water:#5aaeea; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto}
+header.top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:18px;font-family:var(--f-mono);font-size:13px}
+header.top nav{display:flex;gap:18px;flex-wrap:wrap}
+header.top a{text-decoration:none;color:var(--muted)}
+header.top a:hover,header.top a:focus-visible{color:var(--fg);text-decoration:underline}
+button.theme{font:inherit;background:none;border:1px solid var(--line);color:var(--fg);padding:4px 10px;border-radius:4px;cursor:pointer}
+.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;align-items:center;padding-block:36px 56px}
+.hero h1{font-family:var(--f-display);font-weight:700;font-size:clamp(40px,7vw,76px);line-height:.98;letter-spacing:-.025em;margin:0 0 10px;text-wrap:balance}
+.ar{font-size:22px;color:var(--muted);margin:0 0 22px;direction:rtl;text-align:left;unicode-bidi:plaintext}
+.lede{font-size:18px;max-width:46ch;margin:0 0 22px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 24px;padding:0;list-style:none}
+.chips li{font-family:var(--f-mono);font-size:12.5px;border:1px solid var(--line);padding:3px 9px;border-radius:3px;background:var(--panel)}
+.links{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-block;text-decoration:none;font-weight:600;padding:9px 16px;border-radius:4px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-fg)}
+.btn.alt{background:none;color:var(--fg);border-color:var(--line)}
+.btn:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.map{min-width:0}
+.map figure{margin:0}
+.map canvas{width:100%;height:auto;aspect-ratio:64/44;display:block;border:1px solid var(--line);image-rendering:pixelated;background:var(--panel)}
+.map figcaption{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-top:8px}
+.map button{font:inherit;font-family:var(--f-mono);font-size:12px;border:1px solid var(--line);background:var(--panel);color:var(--fg);padding:3px 9px;border-radius:3px;cursor:pointer}
+.legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-family:var(--f-mono);font-size:11.5px;color:var(--muted);margin-top:6px}
+.legend i{display:inline-block;width:10px;height:10px;margin-right:5px;vertical-align:-1px}
+section{padding-block:36px;border-top:1px solid var(--line)}
+h2{font-family:var(--f-display);font-size:30px;letter-spacing:-.015em;margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 22px;max-width:60ch}
+.areas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.areas h3{font-family:var(--f-mono);font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin:0 0 8px;font-weight:500}
+.areas p{margin:0;color:var(--fg)}
+.areas ul{margin:8px 0 0;padding-left:18px;color:var(--muted)}
+.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:18px}
+.tools input,.tools select{font:inherit;font-size:15px;background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:4px;padding:8px 10px}
+.tools input{flex:1 1 220px;min-width:0}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs button{font:inherit;font-size:14px;background:none;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 13px;cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.count{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);margin-left:auto}
+.repos{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px;list-style:none;margin:0;padding:0}
+.repo{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.repo.feat{border-color:var(--accent)}
+.repo h3{margin:0;font-family:var(--f-display);font-size:19px;line-height:1.2;overflow-wrap:anywhere}
+.repo h3 a{text-decoration:none}
+.repo h3 a:hover{text-decoration:underline}
+.repo p{margin:0;color:var(--muted);font-size:14.5px;flex:1}
+.meta{display:flex;justify-content:space-between;gap:8px;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+.empty{padding:24px;border:1px dashed var(--line);border-radius:6px;color:var(--muted)}
+footer{padding-block:32px 48px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;font-size:14px;color:var(--muted)}
+footer code{font-family:var(--f-mono);color:var(--fg);user-select:all}
+@media (max-width:860px){.hero{grid-template-columns:1fr;gap:28px}.areas{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <strong>yamenetoo</strong>
+    <nav aria-label="Sections"><a href="#about">About</a><a href="#work">Research areas</a><a href="#repos">Repositories</a><a href="#contact">Contact</a></nav>
+    <button class="theme" id="themeBtn" type="button" aria-label="Switch colour theme">Theme</button>
+  </header>
+
+  <div class="hero" id="about">
+    <div>
+      <h1>Mohamad Yamen Al-Mohamad</h1>
+      <p class="ar" lang="ar">محمد يامن المحمد</p>
+      <p class="lede">Statistician at the University of Tabriz. I work on probability distributions, neural networks and the statistics behind them, and map land-cover change from satellite data.</p>
+      <ul class="chips"><li>Statistics</li><li>Deep learning</li><li>Remote sensing</li><li>Google Earth Engine</li><li>Python · R</li></ul>
+      <div class="links">
+        <a class="btn" href="#repos">Browse repositories</a>
+        <a class="btn alt" href="https://github.com/yamenetoo" rel="noopener">GitHub profile</a>
+        <a class="btn alt" href="https://orcid.org/0009-0009-1665-7203" rel="noopener">ORCID</a>
+      </div>
+    </div>
+    <div class="map">
+      <figure>
+        <canvas id="lc" width="64" height="44" role="img" aria-label="Generated land-cover raster in Dynamic World colours. The button grows the built-up class by one cellular-automaton step."></canvas>
+        <figcaption>
+          <span id="step">Land-cover raster · year 0</span>
+          <button type="button" id="grow">Run one CA step</button>
+        </figcaption>
+        <div class="legend" id="legend"></div>
+      </figure>
+    </div>
+  </div>
+
+  <section id="work">
+    <h2>Research areas</h2>
+    <p class="sub">Three threads that run through the repositories below.</p>
+    <div class="areas">
+      <div><h3>Statistics</h3><p>New and transformed probability distributions, reliability, control charts and fuzzy methods, with R packages and simulation code.</p></div>
+      <div><h3>Deep learning</h3><p>Statistical views of neural networks: pruning, testing which neurons matter, and the laws of network outputs.</p></div>
+      <div><h3>Remote sensing</h3><p>Land use and land cover change from Sentinel-2 and Dynamic World, Markov and cellular-automata forecasts, and spectral libraries.</p></div>
+    </div>
+  </section>
+
+  <section id="repos">
+    <h2>Repositories</h2>
+    <p class="sub">Public repositories on GitHub. Search, or filter by topic and language.</p>
+    <div class="tools">
+      <input id="q" type="search" placeholder="Search by name or description" aria-label="Search repositories">
+      <select id="lang" aria-label="Filter by language"></select>
+      <div class="tabs" id="tabs" role="group" aria-label="Filter by topic"></div>
+      <span class="count" id="count" aria-live="polite"></span>
+    </div>
+    <ul class="repos" id="list"></ul>
+  </section>
+
+  <footer id="contact">
+    <span>Department of Statistics, University of Tabriz, Iran</span>
+    <span>Email <code>yamenmohamad@tabrizu.ac.ir</code></span>
+    <span><a href="https://github.com/yamenetoo" rel="noopener">github.com/yamenetoo</a></span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var REPOS=[
+    {n:'Statistical-Repository',t:'stat',l:'Jupyter Notebook',s:1,d:'Statistical methods and projects in notebooks, with a detailed README covering every subfolder.',f:1},
+    {n:'RremoteSensing',t:'rs',l:'Python',s:0,d:'Four remote-sensing projects: Dynamic World toolkit, Markov-CA land-cover model for Jableh, Sentinel-2 batch download, USGS spectral library processor.',f:1},
+    {n:'Artificial-Neural-Network-Analysis-Using-Statistical-Approaches',t:'dl',l:'Jupyter Notebook',s:1,d:'Analysis of artificial neural networks with statistical approaches.'},
+    {n:'Model-Pruning-',t:'dl',l:'',s:0,d:'Neural network model pruning. The repository is still empty apart from its title.'},
+    {n:'UQXGD',t:'stat',l:'R',s:0,d:'UQXGD R package.'},
+    {n:'SRF_S2',t:'rs',l:'Python',s:0,d:'Sentinel-2 spectral response function.'},
+    {n:'Sismic-V1',t:'tool',l:'Python',s:0,d:'Python package for seismic data processing, earthquake monitoring, signal processing and visualization.'},
+    {n:'seqgrow',t:'dl',l:'Python',s:0,d:'SeqGrow: grows a neural network one hidden unit at a time, testing each candidate with online false-discovery-rate control (LORD). Code for the article with Heydari and Jabbari Khamnei.'},
+    {n:'Attention-Based-Multi-Asset-Forecasting-with-News-Driven-Criteria',t:'dl',l:'Python',s:0,d:'Attention-based multi-asset forecasting with news-driven criteria.'},
+    {n:'medsent',t:'dl',l:'Python',s:0,d:'Sentiment analysis of medication reviews: classical ML, Bi-LSTM/GRU, ensembles and BERT variants, reproducing the 32 tables of the thesis chapter.'},
+    {n:'CodeAnalyzer',t:'tool',l:'Python',s:0,d:'Python code analysis tool. The repository has no documentation yet.'},
+    {n:'LaTeX2Word',t:'tool',l:'',s:0,d:'LaTeX to Word conversion. The repository has no documentation yet.'},
+    {n:'currency-calculator',t:'tool',l:'HTML',s:0,d:'A currency calculator web page.'},
+    {n:'Fast-Face-tracking',t:'dl',l:'',s:0,d:'Face detection and recognition in video: extracts faces, trains ML and CNN/ANN models, and times each model on test footage.'},
+    {n:'AEMT-OSCP',t:'tool',l:'C++',s:0,d:'Automated evolutionary modularization for parallelizing sequential source code: AST parsing, dependency analysis, DTMC timing model and a genetic algorithm.'}
+  ];
+  var TOPICS=[['all','All'],['stat','Statistics'],['dl','Deep learning'],['rs','Remote sensing'],['tool','Tools']];
+  var LC={'Python':'#3572A5','R':'#198CE7','Jupyter Notebook':'#DA5B0B','HTML':'#e34c26','C++':'#f34b7d','':'#8a948e'};
+  var topic='all',lang='',query='';
+  var list=document.getElementById('list'),tabs=document.getElementById('tabs'),sel=document.getElementById('lang'),
+      q=document.getElementById('q'),count=document.getElementById('count');
+
+  var langs=[];REPOS.forEach(function(r){if(r.l&&langs.indexOf(r.l)<0)langs.push(r.l)});langs.sort();
+  sel.innerHTML='<option value="">All languages</option>'+langs.map(function(l){return '<option>'+l+'</option>'}).join('');
+
+  function renderTabs(){
+    tabs.innerHTML='';
+    TOPICS.forEach(function(p){
+      var b=document.createElement('button');b.type='button';b.textContent=p[1];
+      b.setAttribute('aria-pressed',String(topic===p[0]));
+      b.onclick=function(){topic=p[0];renderTabs();render()};
+      tabs.appendChild(b);
+    });
+  }
+  function esc(s){return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function render(){
+    var rows=REPOS.filter(function(r){
+      return (topic==='all'||r.t===topic)&&(!lang||r.l===lang)&&
+        (!query||(r.n+' '+r.d).toLowerCase().indexOf(query)>=0);
+    }).sort(function(a,b){return (b.f||0)-(a.f||0)});
+    count.textContent=rows.length+' of '+REPOS.length;
+    if(!rows.length){list.innerHTML='<li class="empty">No repository matches. Clear the search or pick another topic.</li>';return}
+    list.innerHTML=rows.map(function(r){
+      var url='https://github.com/yamenetoo/'+r.n;
+      return '<li class="repo'+(r.f?' feat':'')+'"><h3><a href="'+url+'" rel="noopener">'+esc(r.n)+'</a></h3>'+
+        '<p>'+(r.d?esc(r.d):'No description yet. Open the repository for details.')+'</p>'+
+        '<div class="meta"><span><i class="dot" style="background:'+(LC[r.l]||LC[''])+'"></i>'+esc(r.l||'Other')+'</span>'+
+        '<span>'+(r.s?'★ '+r.s:'')+'</span></div></li>';
+    }).join('');
+  }
+  q.oninput=function(){query=q.value.trim().toLowerCase();render()};
+  sel.onchange=function(){lang=sel.value;render()};
+  renderTabs();render();
+
+  /* Theme toggle: cycles system -> light -> dark; remembered if storage works */
+  var root=document.documentElement,btn=document.getElementById('themeBtn');
+  try{var saved=localStorage.getItem('theme');if(saved)root.setAttribute('data-theme',saved)}catch(e){}
+  btn.onclick=function(){
+    var cur=root.getAttribute('data-theme');
+    var dark=cur?cur==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var next=dark?'light':'dark';root.setAttribute('data-theme',next);
+    try{localStorage.setItem('theme',next)}catch(e){}
+    drawMap();
+  };
+
+  /* Land-cover raster: Dynamic World class colours; seeded noise, two smoothing passes, optional growth step */
+  var W=64,H=44;
+  var CL=[['Water','#419bdf'],['Trees','#397d49'],['Grass','#88b053'],['Crops','#e49635'],['Shrub','#dfc35a'],['Built-up','#c4281b'],['Bare','#a59b8f']];
+  document.getElementById('legend').innerHTML=CL.map(function(c){return '<span><i style="background:'+c[1]+'"></i>'+c[0]+'</span>'}).join('');
+  var seed=20260311;function rnd(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296}
+  function field(){
+    var p=[];for(var k=0;k<5;k++)p.push([rnd()*6+1,rnd()*6+1,rnd()*6.28,rnd()*6.28]);
+    var g=[];
+    for(var y=0;y<H;y++){var row=[];for(var x=0;x<W;x++){
+      var v=0;p.forEach(function(q,i){v+=Math.sin(x/W*q[0]+q[2])*Math.cos(y/H*q[1]+q[3])/(1+i*.3)});
+      row.push(v)}g.push(row)}
+    return g;
+  }
+  var f=field(),grid=[],year=0;
+  var tr=[-1.1,-.5,-.1,.35,.75,1.2];
+  for(var y=0;y<H;y++){grid.push([]);for(var x=0;x<W;x++){
+    var v=f[y][x]+(rnd()-.5)*.5,c=6;
+    for(var i=0;i<tr.length;i++){if(v<tr[i]){c=i;break}}
+    if(y>H*.62&&x>W*.55&&rnd()<.25)c=5;
+    grid[y].push(c)}}
+  function smooth(){
+    var out=grid.map(function(r){return r.slice()});
+    for(var y=1;y<H-1;y++)for(var x=1;x<W-1;x++){
+      var cnt={};for(var dy=-1;dy<=1;dy++)for(var dx=-1;dx<=1;dx++){var c=grid[y+dy][x+dx];cnt[c]=(cnt[c]||0)+1}
+      var best=grid[y][x],bn=cnt[best];for(var k in cnt){if(cnt[k]>bn){bn=cnt[k];best=+k}}
+      out[y][x]=best}
+    grid=out;
+  }
+  smooth();smooth();
+  function grow(){
+    var out=grid.map(function(r){return r.slice()});
+    for(var y=1;y<H-1;y++)for(var x=1;x<W-1;x++){
+      if(grid[y][x]===0||grid[y][x]===5)continue;
+      var n=0;for(var dy=-1;dy<=1;dy++)for(var dx=-1;dx<=1;dx++)if(grid[y+dy][x+dx]===5)n++;
+      var p=Math.min(.55,n*.09);
+      if(n&&rnd()<p)out[y][x]=5}
+    grid=out;year++;
+    document.getElementById('step').textContent='Land-cover raster · year '+year;
+    drawMap();
+  }
+  var cv=document.getElementById('lc'),ctx=cv.getContext('2d');
+  function drawMap(){
+    for(var y=0;y<H;y++)for(var x=0;x<W;x++){ctx.fillStyle=CL[grid[y][x]][1];ctx.fillRect(x,y,1,1)}
+  }
+  document.getElementById('grow').onclick=grow;
+  drawMap();
+})();
+</script>
+
+</html>
