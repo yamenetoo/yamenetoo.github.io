@@ -145,13 +145,13 @@ footer code{font-family:var(--f-mono);color:var(--fg);user-select:all}
 <script>
 (function(){
   var REPOS=[
-    {n:'Statistical-Repository',t:['Statistics'],l:'Jupyter Notebook',s:1,d:'R and Python code behind several statistics papers and packages: unit-interval distributions (UnitTrans), control charts, stress–strength reliability, fuzzy quantile regression and more. A README maps every subfolder.',f:1},
-    {n:'RremoteSensing',t:['Remote sensing'],l:'Python',s:0,d:'Four remote-sensing projects: Dynamic World toolkit, Markov-CA land-cover model for Jableh, Sentinel-2 batch download, USGS spectral library processor.',f:1},
-    {n:'Artificial-Neural-Network-Analysis-Using-Statistical-Approaches',t:['Deep learning','Statistics'],l:'Python',s:1,d:'annstat: statistical tuning, inference and compression of trained neural networks (classification and regression, any depth). Companion code of the article with Bevrani and Haydari, arXiv:2409.16426.'},
+    {n:'Statistical-Repository',t:['Statistics'],l:'Jupyter Notebook',s:1,d:'R and Python code behind statistics papers and packages: bootqcc (bootstrap control charts for any distribution), UnitTrans (distributions on the unit interval), KwLccharts, stress–strength reliability, fuzzy quantile regression and more. A README maps every subfolder.',f:1},
+    {n:'RremoteSensing',t:['Remote sensing'],l:'Python',s:0,d:'Four remote-sensing projects: lulc_toolkit (Dynamic World per district and year), a Markov-CA land-cover model for Jableh, geedownload (area search, any Earth Engine dataset, maps, REST API, interface in Arabic, Persian and English) and usgs-splib07 (USGS spectral library API with preprocessing).',f:1},
+    {n:'Artificial-Neural-Network-Analysis-Using-Statistical-Approaches',t:['Deep learning','Statistics'],l:'Python',s:1,d:'annstat: statistical tuning, inference and compression of trained neural networks (classification and regression, any depth), with a GPU experiment suite and Colab notebooks. Companion code of the article with Bevrani and Haydari, arXiv:2409.16426.'},
     {n:'Model-Pruning-',t:['Deep learning'],l:'',s:0,d:'Neural network model pruning. The repository is still empty apart from its title.'},
     {n:'UQXGD',t:['Statistics'],l:'R',s:0,d:'UQXGD R package.'},
     {n:'SRF_S2',t:['Remote sensing'],l:'Python',s:0,d:'Sentinel-2 spectral response function.'},
-    {n:'fractional-delayed-fault-model',t:['Seismology','Statistics'],l:'Python',s:0,d:'Stochastic model of two interacting earthquake faults: Caputo fractional memory, impulsive ruptures and delayed stress pulses. Fitted by maximum likelihood with a particle filter; outputs rupture probabilities for a future window.'},
+    {n:'fractional-delayed-fault-model',t:['Seismology','Statistics'],l:'Python',s:0,d:'Stochastic model of two interacting earthquake faults: Caputo fractional memory, impulsive ruptures and delayed stress pulses. Fitted by maximum likelihood with a particle filter; outputs rupture probabilities for a future window. Includes the validation study, the article and a conference version.'},
     {n:'Sismic-V1',t:['Seismology'],l:'Python',s:0,d:'Python package for seismic data processing, earthquake monitoring, signal processing and visualization.'},
     {n:'seqgrow',t:['Deep learning','Statistics'],l:'Python',s:0,d:'SeqGrow: grows a neural network one hidden unit at a time, testing each candidate with online false-discovery-rate control (LORD). Code for the article with Heydari and Jabbari Khamnei.'},
     {n:'Attention-Based-Multi-Asset-Forecasting-with-News-Driven-Criteria',t:['Deep learning','Finance'],l:'Python',s:0,d:'Attention-based multi-asset forecasting with news-driven criteria.'},
@@ -159,7 +159,7 @@ footer code{font-family:var(--f-mono);color:var(--fg);user-select:all}
     {n:'CodeAnalyzer',t:['Software'],l:'Python',s:0,d:'Python code analysis tool. The repository has no documentation yet.'},
     {n:'LaTeX2Word',t:['Software'],l:'',s:0,d:'LaTeX to Word conversion. The repository has no documentation yet.'},
     {n:'currency-calculator',t:['Software','Finance'],l:'HTML',s:0,d:'A currency calculator web page.'},
-    {n:'Fast-Face-tracking',t:['Computer vision','Deep learning'],l:'Python',s:0,d:'fastfacetrack: face detection, extraction and target-face classification on video, with ML and CNN/ANN models, a built-in simulator and a one-click Colab notebook.'},
+    {n:'Fast-Face-tracking',t:['Computer vision','Deep learning','Statistics'],l:'Python',s:0,d:'fastfacetrack: face detection, extraction and target-face classification on video, with a built-in simulator and a one-click Colab notebook. Also SWIFT-MO, a scan-statistic engine that detects and classifies moving objects with a calibrated false-alarm threshold.'},
     {n:'AEMT-OSCP',t:['Software'],l:'C++',s:0,d:'Automated evolutionary modularization for parallelizing sequential source code: AST parsing, dependency analysis, DTMC timing model and a genetic algorithm.'}
   ];
   var ORDER=['Statistics','Deep learning','Remote sensing','Computer vision','NLP','Finance','Seismology','Software'];
