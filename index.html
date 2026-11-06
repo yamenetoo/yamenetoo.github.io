@@ -74,6 +74,7 @@ h2{font-family:var(--f-display);font-size:30px;letter-spacing:-.015em;margin:0 0
 .repo h3 a{text-decoration:none}
 .repo h3 a:hover{text-decoration:underline}
 .repo p{margin:0;color:var(--muted);font-size:14.5px;flex:1}
+.repo p.in{font-family:var(--f-mono);font-size:12px;margin:-4px 0 0;flex:none}
 .meta{display:flex;justify-content:space-between;gap:8px;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
 .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
 .tags{display:flex;flex-wrap:wrap;gap:6px}.tags span{font-family:var(--f-mono);font-size:11.5px;color:var(--accent);border:1px solid var(--line);padding:1px 7px;border-radius:3px}
@@ -145,6 +146,20 @@ footer code{font-family:var(--f-mono);color:var(--fg);user-select:all}
 (function(){
   var REPOS=[
     {n:'Statistical-Repository',t:['Statistics'],l:'Jupyter Notebook',s:1,d:'R and Python code behind statistics papers and packages: StressSystems (stress–strength reliability of single components and systems for any two distributions), bootqcc (bootstrap control charts for any distribution), BKwG (beta Kumaraswamy-G family), UnitTrans and unit_transform_dist (distributions on the unit interval), KwLccharts, XGamma laws, fuzzy quantile methods and more. A README maps every subfolder.',f:1},
+    {n:'StressSystems',u:'https://github.com/yamenetoo/Statistical-Repository/tree/main/StressSystems',p:'Statistical-Repository',t:['Statistics'],l:'R',s:0,d:'Stress–strength reliability R = P(Y < X) for any two continuous distributions: multi-stress, P(Z < Y < X), s-out-of-k and cascade systems; MLE, MPS, LSE, WLSE, CvM, AD, jackknife, bootstrap and Bayesian estimators; delta, bootstrap and posterior intervals; Monte Carlo engine. R package v0.1.0 with a Colab notebook.'},
+    {n:'bootqcc',u:'https://github.com/yamenetoo/Statistical-Repository/tree/main/bootqcc',p:'Statistical-Repository',t:['Statistics'],l:'R',s:0,d:'Parametric bootstrap control charts for any distribution: Phase I limits for a quantile or any statistic, ARL by Monte Carlo, Phase II monitoring and simulation grids. R package v0.1.0 with vignette and validation scripts.'},
+    {n:'BKwG',u:'https://github.com/yamenetoo/Statistical-Repository/tree/main/BKwG',p:'Statistical-Repository',t:['Statistics'],l:'R',s:0,d:'Beta Kumaraswamy-G family of distributions (Handique et al., 2017) for 12 built-in or user-defined baselines and 6 nested sub-models; MLE, MPS, AD, CvM, LSE, WLSE; LR, Wald and bootstrap goodness-of-fit tests. R package v0.1.0.'},
+    {n:'UnitTrans',u:'https://github.com/yamenetoo/Statistical-Repository/tree/main/UnitTrans',p:'Statistical-Repository',t:['Statistics'],l:'R',s:0,d:'Distributions on (0,1) from a baseline variable through rational, exponential, logit, arcsech, probit and cloglog transforms; MLE, automatic model search and bootstrap goodness of fit. R package v0.1.0 with vignette.'},
+    {n:'UnitTransformDist',u:'https://github.com/yamenetoo/Statistical-Repository/tree/main/UnitTransformDist',p:'Statistical-Repository',t:['Statistics'],l:'R',s:0,d:'unitTransformDist: (0,1) distributions from any base distribution on (0, ∞) via Y = 1/(1+X), with corrected profile-likelihood intervals and Monte Carlo tools. R package v0.1.0 with JSS and R Journal manuscripts.'},
+    {n:'UnitI Python',u:'https://github.com/yamenetoo/Statistical-Repository/tree/main/UnitI%20Python',p:'Statistical-Repository',t:['Statistics'],l:'Python',s:0,d:'unit_transform_dist: the same unit transform in Python, with 50+ base laws, regression, mixtures, Bayesian and censored fitting, L-moments and diagnostics. Package v0.3.0 with tests, CI and Sphinx docs.'},
+    {n:'KwLccharts',u:'https://github.com/yamenetoo/Statistical-Repository/tree/main/KwLccharts',p:'Statistical-Repository',t:['Statistics'],l:'R',s:0,d:'Kumaraswamy–Lindley distribution and bootstrap percentile control charts, with simulation and real-data scripts. R package v0.1.0.'},
+    {n:'LGBootStrapControlChart',u:'https://github.com/yamenetoo/Statistical-Repository/tree/main/LGBootStrapControlChart',p:'Statistical-Repository',t:['Statistics'],l:'R',s:0,d:'Bootstrap percentile control chart for the Lindley-geometric distribution, with Monte Carlo ARL study and examples.'},
+    {n:'TPL_GRL_SS_MODEL',u:'https://github.com/yamenetoo/Statistical-Repository/tree/main/TPL_GRL_SS_MODEL',p:'Statistical-Repository',t:['Statistics'],l:'R',s:0,d:'Stress–strength reliability with Topp-Leone strength and generalized-Rayleigh stress: estimation, multi-stress and cascade models, Monte Carlo study.'},
+    {n:'Bayesian Estimation for Topp-Leone Distribution',u:'https://github.com/yamenetoo/Statistical-Repository/tree/main/Bayesian%20Estimation%20for%20Topp-Leone%20Distribution',p:'Statistical-Repository',t:['Statistics'],l:'R',s:0,d:'Sixteen Bayes estimators for the Topp-Leone distribution under four loss functions and four priors.'},
+    {n:'LR-Fuzzy-Quantile',u:'https://github.com/yamenetoo/Statistical-Repository/tree/main/LR-Fuzzy-Quantile',p:'Statistical-Repository',t:['Statistics'],l:'Python',s:0,d:'Quantile representation of LR random fuzzy numbers: generator, simulations and inference, plus a re-implementation of Parchami et al. (2024).'},
+    {n:'XGD',u:'https://github.com/yamenetoo/Statistical-Repository/tree/main/XGD',p:'Statistical-Repository',t:['Statistics'],l:'Python',s:0,d:'XGamma-family distributions (EQXGD, GXGD, QXGD): maximum likelihood, Monte Carlo studies and neural-network parameter estimation.'},
+    {n:'KME',u:'https://github.com/yamenetoo/Statistical-Repository/tree/main/KME',p:'Statistical-Repository',t:['Statistics'],l:'Python',s:0,d:'Stress–strength reliability for the KM-Exponential distribution.'},
+    {n:'Else',u:'https://github.com/yamenetoo/Statistical-Repository/tree/main/Else',p:'Statistical-Repository',t:['Statistics'],l:'Jupyter Notebook',s:0,d:'Exploratory notebooks.'},
     {n:'RremoteSensing',t:['Remote sensing'],l:'Python',s:0,d:'Four remote-sensing projects: lulc_toolkit (Dynamic World per district and year), a Markov-CA land-cover model for Jableh, geedownload (area search, any Earth Engine dataset, maps, REST API, interface in Arabic, Persian and English) and usgs-splib07 (USGS spectral library API with preprocessing).',f:1},
     {n:'Artificial-Neural-Network-Analysis-Using-Statistical-Approaches',t:['Deep learning','Statistics'],l:'Python',s:1,d:'annstat: statistical tuning, inference and compression of trained neural networks (classification and regression, any depth), with a GPU experiment suite and Colab notebooks. Companion code of the article with Bevrani and Haydari, arXiv:2409.16426.'},
     {n:'Model-Pruning-',t:['Deep learning'],l:'',s:0,d:'Neural network model pruning. The repository is still empty apart from its title.'},
@@ -184,14 +199,14 @@ footer code{font-family:var(--f-mono);color:var(--fg);user-select:all}
   function render(){
     var rows=REPOS.filter(function(r){
       return (topic==='all'||r.t.indexOf(topic)>=0)&&(!lang||r.l===lang)&&
-        (!query||(r.n+' '+r.d).toLowerCase().indexOf(query)>=0);
+        (!query||(r.n+' '+r.d+' '+(r.p||'')).toLowerCase().indexOf(query)>=0);
     }).sort(function(a,b){return (b.f||0)-(a.f||0)});
     count.textContent=rows.length+' of '+REPOS.length;
     if(!rows.length){list.innerHTML='<li class="empty">No repository matches. Clear the search or pick another topic.</li>';return}
     list.innerHTML=rows.map(function(r){
-      var url='https://github.com/yamenetoo/'+r.n;
+      var url=r.u||('https://github.com/yamenetoo/'+r.n);
       return '<li class="repo'+(r.f?' feat':'')+'"><h3><a href="'+url+'" rel="noopener">'+esc(r.n)+'</a></h3>'+
-        '<p>'+(r.d?esc(r.d):'No description yet. Open the repository for details.')+'</p>'+
+        (r.p?'<p class="in">in '+esc(r.p)+'</p>':'')+'<p>'+(r.d?esc(r.d):'No description yet. Open the repository for details.')+'</p>'+
         '<div class="meta"><span><i class="dot" style="background:'+(LC[r.l]||LC[''])+'"></i>'+esc(r.l||'Other')+'</span>'+
         '<span>'+(r.s?'★ '+r.s:'')+'</span></div>'+
         '<div class="tags">'+r.t.map(function(t){return '<span>'+t+'</span>'}).join('')+'</div></li>';
